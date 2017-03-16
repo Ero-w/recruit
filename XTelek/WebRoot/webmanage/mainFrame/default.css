@@ -1,0 +1,80 @@
+*{font-size:12px;font-family:微软雅黑,Tahoma,Verdana,新宋体}
+
+body {background:#D2E0F2;}
+
+a {color:#000000;text-decoration:none;}
+a:hover {color:#333333;text-decoration:underline;}
+
+a.link {color:#006BE3;text-decoration:underline;}
+a.link:hover {color:#FF9900;text-decoration:underline;}
+
+.textbox03 {border:#878787 1px solid;padding:4px 3px;font:微软雅黑,Tahoma,Verdana,新宋体;line-height:14px;background-color:#fff;height:auto;font-size:14px;font-weight:bold;width:190px;}
+
+.txt01 {font:微软雅黑,Tahoma,Verdana,新宋体;padding:3px 2px 2px 2px;border:1px solid #9EAFBE;color:#000000;width:150px;}
+
+.txt {border:#878787 1px solid;padding:4px 3px;font:微软雅黑,Tahoma,Verdana,新宋体;line-height:14px;background-color:#fff;height:auto;font-size:14px;}
+
+.footer {text-align:center;color:#15428B;margin:0px;padding:0px;line-height:23px;font-weight:bold;}
+
+.head a {color:#FFFFFF;text-decoration:none;}
+.head a:hover {color:#FFFFFF;text-decoration:underline;}
+
+.navlist {list-style-type:none;margin:0px;padding:10px;}
+.navlist li {padding:0px;}
+.navlist li a {line-height:24px;}
+.navlist li div {margin:2px 0px;padding-left:10px;padding-top:2px;border:1px dashed #ffffff;}
+.navlist li div.hover {border:1px dashed #99BBE8;background:#E0ECFF;cursor:pointer;}
+.navlist li div.hover a {color:#416AA3;}
+.navlist li div.selected {border:1px solid #99BBE8;background:#E0ECFF;cursor:default;}
+.navlist li div.selected a {color:#416AA3;font-weight:bold;}
+
+.third_ul {list-style-type:none;margin:0px;padding:0px;display:none;}
+.third_ul li {padding-left:20px;}
+
+.icon {background:url(../images/tabicons.png) no-repeat;width:18px;line-height:18px;display:inline-block;}
+.icon-sys {background-position:0px -200px;}
+.icon-set {background-position:-380px -200px;}
+/*.icon-add {background-position:-20px 0px;}*/
+
+.icon-nav {background-position:-100px -20px; }
+.icon-users {background-position:-100px -480px;}
+.icon-role {background-position:-360px -200px;}
+.icon-set {background-position:-380px -200px;}
+.icon-log {background-position:-380px -80px;}
+
+.icon-delete {background-position:-140px -120px;}
+/*.icon-edit {background-position:-380px -320px;}*/
+.icon-magic {background-position:0px -500px;}
+.icon-database {background-position:-20px -140px;}
+
+.icon-arrow {background:url('../images/arrow.gif') no-repeat right;}
+
+.app-icon-save {
+	background:url(../images/tabicons.png) no-repeat;width:18px;line-height:18px;
+	display:inline-block;background-position:-160px -140px;
+}
+
+.app-icon-help {
+	background:url(../images/help.png) no-repeat;width:18px;line-height:18px;
+	display:inline-block;background-position:0px -1px;
+}
+
+.app-icon-logn {
+	background:url(../images/logn.gif) no-repeat;width:16px;line-height:16px;
+	display:inline-block;background-position:0px 0px;
+}
+
+.app-icon-exit {
+	background:url(../images/exit.gif) no-repeat;width:16px;line-height:16px;
+	display:inline-block;background-position:0px 0px;
+}
+
+.app-icon-home {
+	background:url(../images/tabicons.png) no-repeat;width:18px;line-height:18px;
+	display:inline-block;background-position:-200px -220px;
+}
+
+.app-icon-html {
+	background:url(../images/tabicons.png) no-repeat;width:18px;line-height:18px;
+	display:inline-block;background-position:-220px -220px;
+}

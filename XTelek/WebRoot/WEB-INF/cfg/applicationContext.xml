@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+           http://www.springframework.org/schema/tx 
+           http://www.springframework.org/schema/tx/spring-tx-3.0.xsd"
+	default-lazy-init="true">
+	
+	<!-- 
+	<bean id="sessionFactory" class="com.telek.ghj.connnect.LocalSessionFactoryBean" scope="singleton">
+		<property name="configLocation">
+			<value>/hibernate.cfg.xml</value>
+		</property>
+	</bean>
+	-->
+	
+	<!-- 
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean" scope="singleton">
+            <property name="configLocation" value="/WEB-INF/cfg/hibernate.cfg.xml"/>  
+	</bean>
+	 -->
+	 
+	<!-- 通过Spring提供的PropertyPlaceholderConfigurer类，读取配置文件信息。 -->
+	<bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations"><!-- 对数组注入 -->
+			<list><!-- 数组 -->
+				<value>/WEB-INF/cfg/jdbcDataBasePool.properties</value><!-- 数组元素 -->
+				<value>/WEB-INF/cfg/hibernate.properties</value><!-- 数组元素 -->
+			</list>
+		</property>
+	</bean>
+	<!-- 通过Spring提供的PropertyPlaceholderConfigurer类，读取配置文件信息。 -->
+	
+	<!-- 创建JDBC数据源（数据库连接池） -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="${stationrecordDataSource.driverClass}"/>
+		<property name="jdbcUrl" value="${stationrecordDataSource.jdbcUrl}"/>
+		<property name="user" value="${stationrecordDataSource.user}"/>
+		<property name="password" value="${stationrecordDataSource.password}"/>
+		<property name="minPoolSize" value="${stationrecordDataSource.minPoolSize}"/>
+		<property name="initialPoolSize" value="${stationrecordDataSource.initialPoolSize}"/>
+		<property name="maxPoolSize" value="${stationrecordDataSource.maxPoolSize}" />
+		<property name="acquireIncrement" value="${stationrecordDataSource.acquireIncrement}"/>
+		<property name="acquireRetryAttempts" value="${stationrecordDataSource.acquireRetryAttempts}"/>
+		<property name="acquireRetryDelay" value="${stationrecordDataSource.acquireRetryDelay}"/>
+		<property name="breakAfterAcquireFailure" value="${stationrecordDataSource.breakAfterAcquireFailure}"/>
+		<property name="autoCommitOnClose" value="${stationrecordDataSource.autoCommitOnClose}"/>
+	<!--<property name="checkoutTimeout" value="${stationrecordDataSource.checkoutTimeout}"/>-->
+	<!--<property name="idleConnectionTestPeriod" value="${stationrecordDataSource.idleConnectionTestPeriod}"/>-->
+		<property name="maxIdleTime" value="${stationrecordDataSource.maxIdleTime}"/>
+	 	<property name="preferredTestQuery" value="${stationrecordDataSource.preferredTestQuery}"/>
+	 	<property name="maxStatements" value="${stationrecordDataSource.maxStatements}" />
+        <property name="maxStatementsPerConnection" value="${stationrecordDataSource.maxStatementsPerConnection}"/>
+        <property name="numHelperThreads" value="${stationrecordDataSource.numHelperThreads}"/>
+        <property name="testConnectionOnCheckin" value="true"/>
+        <property name="testConnectionOnCheckout" value="true"/>
+	</bean>
+	<!-- 创建JDBC数据源（数据库连接池） -->
+	
+	<!-- 创建SessionFactory数据源（Hibernate数据源），通过AnnotationSessionFactoryBean类创建SessionFactory工厂 -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="mappingLocations">
+			<value>classpath:/com/telek/ghj/mapping/*.hbm.xml</value>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${sessionFactory.hibernateProperties.hibernate.dialect}</prop>
+				<prop key="hibernate.show_sql">${sessionFactory.hibernateProperties.hibernate.show_sql}</prop>
+				<prop key="hibernate.format_sql">${sessionFactory.hibernateProperties.hibernate.format_sql}</prop>
+				<prop key="hibernate.use_sql_comments">${sessionFactory.hibernateProperties.hibernate.use_sql_comments}</prop>
+				<prop key="hibernate.generate_statistics">${sessionFactory.hibernateProperties.hibernate.generate_statistics}</prop>
+				<prop key="hibernate.connection.release_mode">${sessionFactory.hibernateProperties.hibernate.connection.release_mode}</prop>
+				<prop key="hibernate.autoReconnect">${sessionFactory.hibernateProperties.hibernate.autoReconnect}</prop>
+				<prop key="hibernate.cglib.use_reflection_optimizer">${sessionFactory.hibernateProperties.hibernate.cglib.use_reflection_optimizer}</prop>
+				<prop key="hibernate.jdbc.batch_size">${sessionFactory.hibernateProperties.hibernate.jdbc.batch_size}</prop>
+			</props>
+		</property>
+	</bean>
+	<!-- 创建SessionFactory数据源（Hibernate数据源），通过AnnotationSessionFactoryBean类创建SessionFactory工厂 -->
+		
+	
+	
+	<!-- Spring封装的一个数据库操作对象 -->
+	<!-- 
+		SessionFactory看做数据库连接池（DataSource），Session就是一个数据库连接（Connection），Query就是一个预编译数据库操作对象（PreparedStatement）
+		HibernateTemplate对Hibernate操作数据库一系列方法进行的封装，实现数据库操作的方法（DataBaseClass）。
+	 -->
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<!-- Spring封装的一个数据库操作对象 -->
+	
+	<!-- 设置事务 -->
+	<bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<!-- 事物管理作用的函数，以及其事务提交和回滚的判断条件-->
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="find*" read-only="true" /><!-- 查询 -->
+			<tx:method name="get*" read-only="true" /><!-- 获取 -->
+			<tx:method name="add*" propagation="REQUIRED" rollback-for="java.lang.Exception"/><!-- 添加 -->
+			<tx:method name="edit*" propagation="REQUIRED" rollback-for="java.lang.Exception"/><!-- 编辑 -->
+			<tx:method name="fill*" read-only="true" /><!-- 填充编辑 -->
+			<tx:method name="remove*" propagation="REQUIRED" rollback-for="java.lang.Exception" /><!-- 删除 -->
+			<tx:method name="exec*" propagation="REQUIRED"  rollback-for="java.lang.Exception" /><!-- 执行 -->
+		</tx:attributes>
+	</tx:advice>
+	<!-- 事物管理作用的函数，以及其事务提交和回滚的判断条件-->
+	
+	<!-- 设定事务管理作用的范围（业务规则层） 事物主方法一定是public的，并且类名要以BL结尾-->
+	<aop:config>
+		<aop:pointcut id="bussinessService" expression="execution(public * com.telek.ghj.service..*Service.*(..))" />
+		<aop:advisor pointcut-ref="bussinessService" advice-ref="txAdvice"/>
+	</aop:config>
+	<!-- 设定事务管理作用的范围（业务规则层） -->
+	
+	
+	<bean id="logInterceptor" class="com.telek.ghj.util.LogInterceptor" scope="singleton"></bean>
+	
+	<aop:config>
+		<aop:pointcut id="logPointCut" expression="execution(public * com.telek.ghj.service..*Service.*(..))" />
+		<aop:advisor pointcut-ref="logPointCut" advice-ref="logInterceptor"/>
+	</aop:config>
+	
+</beans>

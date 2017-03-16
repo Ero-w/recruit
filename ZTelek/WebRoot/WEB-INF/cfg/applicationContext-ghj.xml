@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+           http://www.springframework.org/schema/tx 
+           http://www.springframework.org/schema/tx/spring-tx-3.0.xsd"
+	default-lazy-init="true">
+	
+	<!-- 职业表得配置 -->
+	<bean id="stationDao" class="com.telek.ghj.dao.impl.StationDaoImpl" scope="singleton">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+	
+	<bean id="stationService" class="com.telek.ghj.service.impl.StationServiceImpl" scope="singleton">
+		<property name="stationDao" ref="stationDao"></property>
+	</bean>
+	
+	<!-- 获取岗位列表 -->
+	<bean id="getStationList" class="com.telek.ghj.action.app.GetStationList" scope="singleton">
+		<property name="stationService" ref="stationService"></property>
+	</bean>
+	
+	<!-- 获得岗位简介 -->
+	<bean id="getPositionAction" class="com.telek.ghj.action.app.GetPositionAction" scope="singleton">
+		<property name="stationService" ref="stationService"></property>
+	</bean>
+	
+	
+	
+	<!-- 用户表得配置 -->
+	<bean id="userDao" class="com.telek.ghj.dao.impl.UserDaoImpl" scope="singleton">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+	
+	<bean id="userService" class="com.telek.ghj.service.impl.UserServiceImpl" scope="singleton">
+		<property name="userDao" ref="userDao"></property>
+	</bean>
+	
+	<bean id="registerAction" class="com.telek.ghj.action.app.RegisterAction">
+		<property name="userService" ref="userService"></property>
+	</bean>
+	
+	<bean id="loginAction" class="com.telek.ghj.action.app.LoginAction">
+		<property name="userService" ref="userService"></property>
+	</bean>
+	
+	<bean id="checkNameAction" class="com.telek.ghj.action.app.CheckNameAction">
+		<property name="userService" ref="userService"></property>
+	</bean>
+	
+	<bean id="getUserAction" class="com.telek.ghj.action.app.GetUserAction">
+		<property name="userService" ref="userService"></property>
+	</bean>
+	
+	<bean id="changeBasicAction" class="com.telek.ghj.action.app.ChangeBasicAction">
+		<property name="userService" ref="userService"></property>
+	</bean>
+	
+	<bean id="changeUserPassAction" class="com.telek.ghj.action.app.ChangeUserPassAction">
+		<property name="userService" ref="userService"></property>
+	</bean>
+	
+	<bean id="changeDetailAction" class="com.telek.ghj.action.app.ChangeDetailAction">
+		<property name="userService" ref="userService"></property>
+	</bean>
+	
+	<bean id="uploadAction" class="com.telek.ghj.action.app.UploadAction">
+		<property name="userService" ref="userService"></property>
+	</bean>
+	
+	<bean id="pictureAction" class="com.telek.ghj.action.app.PictureAction">
+		<property name="userService" ref="userService"></property>
+	</bean>
+	
+	<bean id="downAction" class="com.telek.ghj.action.app.DownAction">
+		<property name="userService" ref="userService"></property>
+	</bean>
+	
+	
+	<!-- 简历投递表得配置 -->
+	<bean id="deliveryDao" class="com.telek.ghj.dao.impl.DeliveryDaoImpl" scope="singleton">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+	
+	<bean id="deliveryService" class="com.telek.ghj.service.impl.DeliveryServiceImpl">
+		<property name="deliveryDao" ref="deliveryDao"></property>
+	</bean>
+	
+	<bean id="getStationAction" class="com.telek.ghj.action.app.GetStationAction">
+		<property name="deliveryService" ref="deliveryService"></property>
+	</bean>
+	
+
+	
+	
+	
+	
+	<!-- 事务处理业务得配置 -->
+	<bean id="tranService" class="com.telek.ghj.service.impl.TranServiceImpl" scope="singleton">
+		<property name="userDao" ref="userDao"></property>
+		<property name="deliveryDao" ref="deliveryDao"></property>
+	</bean>
+	
+	<bean id="applyAction" class="com.telek.ghj.action.app.ApplyAction">
+		<property name="tranService" ref="tranService"></property>
+		<property name="userService" ref="userService"></property>
+	</bean>
+	
+	<bean id="backAction" class="com.telek.ghj.action.app.BackAction">
+		<property name="tranService" ref="tranService"></property>
+		<property name="userService" ref="userService"></property>
+	</bean>
+	
+	
+	<!-- session清除 -->
+	<bean id="logoutAction" class="com.telek.ghj.action.app.LogoutAction"></bean>
+	
+</beans>

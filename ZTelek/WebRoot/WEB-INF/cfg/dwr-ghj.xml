@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dwr PUBLIC "-//GetAhead Limited//DTD Direct Web Remoting 3.0//EN" "http://getahead.org/dwr/dwr30.dtd">
+<dwr>
+	<allow>
+		<!-- Dwr管理 
+		<create creator="new" javascript="loginAction" scope="application">
+			<param name="class" value="com.telek.ghj.action.dwr.LoginAction"/>
+			<include method="login"/>
+		</create>
+		-->
+		
+			<!-- Dwr管理 
+		<create creator="spring" javascript="loginAction">
+			<param name="beanName" value="loginActionDwr"/>
+			<include method="login"/>
+		</create>
+		-->
+	</allow>
+</dwr>
